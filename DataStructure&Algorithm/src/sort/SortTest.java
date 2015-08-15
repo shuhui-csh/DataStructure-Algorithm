@@ -16,11 +16,10 @@ public class SortTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		DataWrap[] data = { new DataWrap(21, ""), new DataWrap(30, ""),
-				new DataWrap(49, ""), new DataWrap(30, "*"),
-				new DataWrap(16, ""), new DataWrap(9, ""),
-				new DataWrap(-16, ""), new DataWrap(21, "*"),
-				new DataWrap(-49, "") };
+		DataWrap[] data = { new DataWrap(9, ""), new DataWrap(13, ""),
+				new DataWrap(10, ""), new DataWrap(13, "*"),
+				new DataWrap(6, ""), new DataWrap(9, ""), new DataWrap(-1, ""),
+				new DataWrap(6, "*"), new DataWrap(-4, "") };
 		// System.out.println("选择排序之前:");
 		// System.out.println(Arrays.toString(data));
 		// // 选择选择排序算法进行排序
@@ -67,11 +66,26 @@ public class SortTest {
 		// System.out.println("希尔排序之后:");
 		// System.out.println(Arrays.toString(data));
 
-		System.out.println("归并排序之前:");
+		// System.out.println("归并排序之前:");
+		// System.out.println(Arrays.toString(data));
+		// // 选择快速排序算法进行排序
+		// SortUtil.mergeSort(data);
+		// System.out.println("归并排序之后:");
+		// System.out.println(Arrays.toString(data));
+
+		System.out.println("桶排序之前:");
 		System.out.println(Arrays.toString(data));
-		// 选择快速排序算法进行排序
-		SortUtil.mergeSort(data);
-		System.out.println("归并排序之后:");
+		// 选择桶排序算法进行排序
+		SortUtil.bucketSort(data, -4, 14);
+		System.out.println("桶排序之后:");
 		System.out.println(Arrays.toString(data));
+
+		int[] dat = { 12, 56, 653,1999, 200, 987, 100 };
+		System.out.println("基数排序之前:");
+		System.out.println(Arrays.toString(dat));
+		// 选择桶排序算法进行排序
+		SortUtil.radixSort(dat, 10, 4);
+		System.out.println("基数排序之后:");
+		System.out.println(Arrays.toString(dat));
 	}
 }

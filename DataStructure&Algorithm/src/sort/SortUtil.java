@@ -330,6 +330,76 @@ public class SortUtil {
 	}
 
 	/**
+	 * @param data
+	 *            待排序数组
+	 * @param min
+	 *            序列的最小值
+	 * @param max
+	 *            序列的最大值+1
+	 */
+	public static void bucketSort(DataWrap[] data, int min, int max) {
+		System.out.println("桶式排序开始：");
+		int arrayLength = data.length;
+		// 用作中间缓存数组
+		DataWrap[] temp = new DataWrap[arrayLength];
+		// buckets数组相当于定义了max-min个桶
+		// buckets用于记录待排序元素的信息
+		int buckets[] = new int[max - min];
+		// 计算每个元素在序列中出现的次数
+		for (int i = 0; i < arrayLength; i++) {
+			// buckets数组记录了data[i].data（datawrap对象不同，可数据有可能相同）出现的次数
+			buckets[data[i].data - min]++;
+		}
+		// 打印出当前buckets数组的情况
+		System.out.println(Arrays.toString(buckets));
+		// 计算落入各桶内的元素在有序序列中的位置
+		for (int i = 1; i < max - min; i++) {
+			buckets[i] = buckets[i] + buckets[i - 1];
+		}
+		// 打印出当前buckets数组的情况
+		System.out.println(Arrays.toString(buckets));
+		// 将data数组中数据完全复制到temp数组中缓存起来
+		System.arraycopy(data, 0, temp, 0, arrayLength);
+		// 根据buckets数组中的信息将待排序列的各元素放入相应的位置
+		for (int i = arrayLength - 1; i >= 0; i--) {
+			data[--buckets[temp[i].data - min]] = temp[i];
+		}
+	}
+
+	/**
+	 * @param data
+	 *            待排序数组
+	 * @param radix
+	 *            指定关键字拆分的进制，如radix=10,表明按10进制拆分
+	 * @param d
+	 *            指定将关键字拆分成几个关键字
+	 */
+	public static void radixSort(int[] data, int radix, int d) {
+		System.out.println("基数排序开始排序：");
+		int arrayLeng = data.length;
+		int temp[] = new int[arrayLeng];
+		int[] buckets = new int[radix];
+		for (int i = 0, rate = 1; i < d; i++) {
+			Arrays.fill(buckets, 0);
+			System.arraycopy(data, 0, temp, 0, arrayLeng);
+			for (int j = 0; j < arrayLeng; j++) {
+				int subkey = (temp[j] / rate) % radix;
+				buckets[subkey]++;
+			}
+			for (int j = 1; j < radix; j++) {
+				buckets[j] = buckets[j] + buckets[j - 1];
+			}
+			for (int k = arrayLeng - 1; k >= 0; k--) {
+				int subkey = (temp[k] / rate) % radix;
+				data[--buckets[subkey]] = temp[k];
+			}
+			System.out
+					.println("对" + rate + "位上子关键字排序：" + Arrays.toString(data));
+			rate *= radix;
+		}
+	}
+
+	/**
 	 * 交换操作
 	 * 
 	 * @param data
